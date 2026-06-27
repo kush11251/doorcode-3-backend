@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const GlobalControl = require('../models/GlobalControl');
 const jwt = require('jsonwebtoken');
 const logger = require('../logger');
 
@@ -12,6 +13,12 @@ const generateToken = (id) => {
 exports.signup = async (req, res) => {
   try {
     const { firstName, lastName, email, phoneNumber, password, role } = req.body;
+
+    const globalControl = await GlobalControl.findOne();
+    if (globalControl && !globalControl.signupEnabled) {
+      await logger({ level: 'WARNING', message: `Signup attempt blocked by global control: ${email}`, service: 'auth' });
+      return res.status(403).json({ statusCode: 403, message: 'Signup is currently disabled' });
+    }
 
     const userExists = await User.findOne({ email });
     if (userExists) {
