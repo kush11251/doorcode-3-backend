@@ -195,6 +195,43 @@ exports.getOrganizerInvitees = async (req, res) => {
   }
 };
 
+// @desc    Join event by event code
+// @route   POST /api/events/join
+// @access  Protected
+exports.joinEventByCode = async (req, res) => {
+  try {
+    const { eventCode } = req.body;
+    const userId = req.user.userId;
+
+    if (!eventCode) {
+      return res.status(400).json({ statusCode: 400, message: 'eventCode is required' });
+    }
+
+    console.log(`User ${userId} is attempting to join event with code: ${eventCode}`); // Debugging line
+
+    const event = await Event.findOne({ eventCode });
+
+    console.log(`Event found: ${event ? event.eventId : 'none'}`); // Debugging line
+
+    if (!event) {
+      await logger({ level: 'WARNING', message: `Join event failed, invalid code: ${eventCode}`, service: 'event-service' });
+      return res.status(404).json({ statusCode: 404, message: 'Event not found' });
+    }
+
+    if (!event.inviteeIds.includes(userId)) {
+      event.inviteeIds.push(userId);
+      await event.save();
+      await mapEventToUsers(event.eventId, [userId]);
+    }
+
+    await logger({ level: 'INFO', message: `User ${userId} joined event ${event.eventId} by code`, service: 'event-service' });
+    res.status(200).json({ statusCode: 200, message: 'Successfully joined event', data: event });
+  } catch (error) {
+    await logger({ level: 'ERROR', message: `Join event failed: ${error.message}`, service: 'event-service' });
+    res.status(500).json({ statusCode: 500, message: error.message });
+  }
+};
+
 // @desc    Get invitee details for a single event
 // @route   GET /api/events/:eventId/invitees/details
 // @access  Protected

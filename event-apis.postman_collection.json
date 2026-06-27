@@ -1,0 +1,299 @@
+{
+  "info": {
+    "name": "Doorcode-3 Backend Events API",
+    "description": "Postman collection for Doorcode-3 backend event endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Event",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.data && jsonData.data.eventId) {",
+              "  pm.environment.set('eventId', jsonData.data.eventId);",
+              "  console.log('Stored eventId.');",
+              "} else {",
+              "  console.error('No eventId returned.');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Pre-Trek Tech Sync & Gear Check\",\n  \"eventCode\": \"12345678\",\n  \"organizer\": \"High-Altitude Coders Group\",\n  \"organizerIds\": [\"organizerId1\", \"organizerId2\"],\n  \"inviteeIds\": [\"inviteeId1\", \"inviteeId2\"],\n  \"date\": \"Saturday, July 4, 2026\",\n  \"time\": \"10:00 AM - 4:00 PM IST\",\n  \"startDateTime\": \"2026-07-04T10:00:00+05:30\",\n  \"endDateTime\": \"\",\n  \"location\": \"Pune Basecamp Cafe\",\n  \"address\": \"Viman Nagar, Pune, Maharashtra, India\",\n  \"dressCode\": \"Smart Casual or Comfortable Trekking Gear\",\n  \"description\": \"Join us for our final alignment meeting before the upcoming expedition. We will be doing a comprehensive gear check, mapping out our offline GPS routes, and reviewing the custom tracker app deployment.\",\n  \"activities\": [\n    {\n      \"time\": \"\",\n      \"name\": \"Welcome & Route Mapping\",\n      \"description\": \"Coffee and a walkthrough of the digital trail maps on the big screen.\"\n    },\n    {\n      \"time\": \"\",\n      \"name\": \"Physical Gear Inspection\",\n      \"description\": \"Ensure all cold-weather gear, boots, and safety equipment meet requirements.\"\n    },\n    {\n      \"time\": \"\",\n      \"name\": \"Lunch Break\",\n      \"description\": \"High-protein lunch provided by the venue.\"\n    },\n    {\n      \"time\": \"\",\n      \"name\": \"Tech Deployment\",\n      \"description\": \"Installing the custom offline tracking application on all peer devices and testing satellite pings.\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Events",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/events",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Event By ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/events/{{eventId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events",
+            "{{eventId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Event",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"location\": \"New Venue Name\",\n  \"address\": \"Updated address line\",\n  \"time\": \"11:00 AM - 5:00 PM IST\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/events/{{eventId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events",
+            "{{eventId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Invitee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"inviteeId\": \"inviteeId1\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/events/{{eventId}}/invitees",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events",
+            "{{eventId}}",
+            "invitees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Organizer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"organizerId\": \"organizerId1\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/events/{{eventId}}/organizers",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events",
+            "{{eventId}}",
+            "organizers"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Activity",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"time\": \"2:00 PM\",\n  \"name\": \"Final Demo\",\n  \"description\": \"Final walkthrough of the tracking app and recap.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/events/{{eventId}}/activities",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events",
+            "{{eventId}}",
+            "activities"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Event Invitees",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/events/{{eventId}}/invitees",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events",
+            "{{eventId}}",
+            "invitees"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Event Organizers",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/events/{{eventId}}/organizers",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "events",
+            "{{eventId}}",
+            "organizers"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "eventId",
+      "value": ""
+    }
+  ]
+}

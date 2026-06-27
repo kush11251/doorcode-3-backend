@@ -12,7 +12,8 @@ const {
   getEventOrganizers,
   getEventsForUser,
   getOrganizerInvitees,
-  getEventInviteeDetails
+  getEventInviteeDetails,
+  joinEventByCode
 } = require('../controllers/eventController');
 const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
@@ -21,6 +22,7 @@ router.get('/', protect, getEvents);
 router.post('/', protect, createEvent);
 router.get('/user/:userId', protect, getEventsForUser);
 router.get('/organizer/:userId/invitees', protect, getOrganizerInvitees);
+router.post('/join', protect, joinEventByCode);
 router.get('/:eventId/invitees/details', protect, getEventInviteeDetails);
 router.get('/:eventId', protect, getEventById);
 router.patch('/:eventId', protect, updateEvent);
