@@ -26,6 +26,26 @@ const logSchema = new mongoose.Schema({
   service: {
     type: String,
     required: true
+  },
+  origin: {
+    type: String,
+    default: ''
+  },
+  ipAddress: {
+    type: String,
+    default: ''
+  },
+  request: {
+    type: Object,
+    default: {}
+  },
+  response: {
+    type: Object,
+    default: {}
+  },
+  metadata: {
+    type: Object,
+    default: {}
   }
 }, { timestamps: true });
 

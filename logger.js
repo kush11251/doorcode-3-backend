@@ -2,7 +2,7 @@ const { createLog } = require('./controllers/logController');
 
 const logLevels = ['INFO', 'WARNING', 'ERROR'];
 
-const logger = async ({ level = 'INFO', message, service = 'unknown' }) => {
+const logger = async ({ level = 'INFO', message, service = 'unknown', request = {}, response = {}, origin = '', ipAddress = '', metadata = {} }) => {
   if (!message) {
     throw new Error('Logger requires a message');
   }
@@ -12,10 +12,12 @@ const logger = async ({ level = 'INFO', message, service = 'unknown' }) => {
   }
 
   try {
-    await createLog({ level, message, service });
+    await createLog({ level, message, service, request, response, origin, ipAddress, metadata });
   } catch (error) {
     console.error('Failed to create log:', error);
   }
 };
+
+module.exports = logger;
 
 module.exports = logger;

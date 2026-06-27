@@ -31,11 +31,15 @@ app.use(requestLogger);
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const logRoutes = require('./routes/logRoutes');
+const eventRoutes = require('./routes/eventRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/logs', logRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)

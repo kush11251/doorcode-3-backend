@@ -6,9 +6,9 @@ const Log = require('../models/Log');
 exports.getLogs = async (req, res) => {
   try {
     const logs = await Log.find({}).sort({ createdAt: -1 }).limit(50);
-    res.status(200).json({ count: logs.length, data: logs });
+    res.status(200).json({ statusCode: 200, count: logs.length, data: logs });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ statusCode: 500, message: error.message });
   }
 };
 
@@ -19,11 +19,11 @@ exports.getLogById = async (req, res) => {
   try {
     const log = await Log.findOne({ id: req.params.id });
     if (!log) {
-      return res.status(404).json({ message: 'Log not found' });
+      return res.status(404).json({ statusCode: 404, message: 'Log not found' });
     }
-    res.status(200).json({ data: log });
+    res.status(200).json({ statusCode: 200, data: log });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ statusCode: 500, message: error.message });
   }
 };
 
@@ -33,9 +33,9 @@ exports.getLogById = async (req, res) => {
 exports.clearLogs = async (req, res) => {
   try {
     await Log.deleteMany({});
-    res.status(200).json({ message: 'All logs cleared' });
+    res.status(200).json({ statusCode: 200, message: 'All logs cleared' });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ statusCode: 500, message: error.message });
   }
 };
 
@@ -43,6 +43,11 @@ exports.clearLogs = async (req, res) => {
 // @param   {string} level
 // @param   {string} message
 // @param   {string} service
-exports.createLog = async ({ level, message, service }) => {
-  return await Log.create({ level, message, service });
+// @param   {object} request
+// @param   {object} response
+// @param   {string} origin
+// @param   {string} ipAddress
+// @param   {object} metadata
+exports.createLog = async ({ level, message, service, request = {}, response = {}, origin = '', ipAddress = '', metadata = {} }) => {
+  return await Log.create({ level, message, service, request, response, origin, ipAddress, metadata });
 };
