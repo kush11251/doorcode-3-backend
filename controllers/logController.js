@@ -5,7 +5,7 @@ const Log = require('../models/Log');
 // @access  Admin only
 exports.getLogs = async (req, res) => {
   try {
-    const logs = await Log.find({}).sort({ createdAt: -1 }).limit(50);
+    const logs = await Log.find({}).sort({ createdAt: -1 });
     res.status(200).json({ statusCode: 200, count: logs.length, data: logs });
   } catch (error) {
     res.status(500).json({ statusCode: 500, message: error.message });

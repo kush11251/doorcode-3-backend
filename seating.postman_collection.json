@@ -1,0 +1,182 @@
+{
+  "info": {
+    "name": "doorcode-3-backend Seating APIs",
+    "description": "Postman collection for seating arrangement endpoints in Doorcode 3 backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Seating",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"eventId\": \"{{eventId}}\",\n  \"tables\": [\n    {\n      \"tableNumber\": \"1\",\n      \"numberOfPeople\": 12,\n      \"people\": [\n        { \"userId\": \"{{userId}}\", \"role\": \"vip\", \"seat\": \"1\" },\n        { \"userId\": \"\", \"role\": \"\", \"seat\": \"2\" },\n        { \"userId\": \"{{anotherUserId}}\", \"role\": \"vip\", \"seat\": \"3\" }\n      ]\n    },\n    {\n      \"tableNumber\": \"2\",\n      \"numberOfPeople\": 2,\n      \"people\": [\n        { \"userId\": \"{{thirdUserId}}\", \"role\": \"none\", \"seat\": \"1\" }\n      ]\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/seating",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seating"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Seating by Event",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/seating/event/{{eventId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seating",
+            "event",
+            "{{eventId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Seating by Seating ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/seating/{{seatingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seating",
+            "{{seatingId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Seating Table by Seating ID",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"numberOfPeople\": 12,\n  \"people\": [\n    { \"userId\": \"{{userId}}\", \"role\": \"vip\", \"seat\": \"1\" },\n    { \"userId\": \"\", \"role\": \"\", \"seat\": \"2\" },\n    { \"userId\": \"{{guestId}}\", \"role\": \"guest\", \"seat\": \"3\" }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/seating/{{seatingId}}/table/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seating",
+            "{{seatingId}}",
+            "table",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Seating Table by Event ID",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"numberOfPeople\": 12,\n  \"people\": [\n    { \"userId\": \"{{userId}}\", \"role\": \"vip\", \"seat\": \"1\" },\n    { \"userId\": \"\", \"role\": \"\", \"seat\": \"2\" },\n    { \"userId\": \"{{guestId}}\", \"role\": \"guest\", \"seat\": \"3\" }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/seating/event/{{eventId}}/table/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seating",
+            "event",
+            "{{eventId}}",
+            "table",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Seating",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/seating/{{seatingId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "seating",
+            "{{seatingId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

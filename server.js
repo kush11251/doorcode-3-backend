@@ -32,6 +32,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const logRoutes = require('./routes/logRoutes');
 const eventRoutes = require('./routes/eventRoutes');
+const seatingRoutes = require('./routes/seatingRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const globalRoutes = require('./routes/globalRoutes');
 
@@ -40,6 +41,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/logs', logRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/seating', seatingRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/global', globalRoutes);
 

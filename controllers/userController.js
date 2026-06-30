@@ -14,6 +14,19 @@ exports.getAllUsers = async (req, res) => {
     res.status(500).json({ statusCode: 500, message: error.message });
   }
 };
+// @desc    Get simple user list (userId, firstName, lastName)
+// @route   GET /api/users/summary
+exports.getUsersSummary = async (req, res) => {
+  try {
+    const users = await User.find({}).select('userId firstName lastName');
+    await logger({ level: 'INFO', message: `Retrieved simple user summary`, service: 'user-service' });
+    res.status(200).json({ statusCode: 200, count: users.length, data: users });
+  } catch (error) {
+    await logger({ level: 'ERROR', message: `Get users summary failed: ${error.message}`, service: 'user-service' });
+    res.status(500).json({ statusCode: 500, message: error.message });
+  }
+};
+
 // @desc    Update user profile
 // @route   PATCH /api/users/:userId
 exports.updateUserProfile = async (req, res) => {
